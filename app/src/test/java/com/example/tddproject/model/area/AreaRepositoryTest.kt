@@ -61,7 +61,7 @@ class AreaRepositoryTest {
         )
 
         // then: 매핑 검증
-        val list = repo.getAreaCode("AND", "APP", "SERVICE_KEY")
+        val list = repo.getAreaCode("AND", "APP", "7DqbnD3jqhwLcsHYJYxcWeyqakoHvQeL1XsordCkj9xkck7CouoWNgkH0qFuDhnPcHTaY6mLNndKh0FNmeNhwQ==")
         assertThat(list).containsExactly(
             Area(1, "서울"),
         ).inOrder()
@@ -74,7 +74,7 @@ class AreaRepositoryTest {
         assertThat(url.queryParameter("MobileOS")).isEqualTo("AND")
         assertThat(url.queryParameter("MobileApp")).isEqualTo("APP")
         assertThat(url.queryParameter("_type")).isEqualTo("json")
-        assertThat(url.queryParameter("serviceKey")).isEqualTo("SERVICE_KEY")
+        assertThat(url.queryParameter("serviceKey")).isEqualTo("7DqbnD3jqhwLcsHYJYxcWeyqakoHvQeL1XsordCkj9xkck7CouoWNgkH0qFuDhnPcHTaY6mLNndKh0FNmeNhwQ==")
     }
 
     @After
