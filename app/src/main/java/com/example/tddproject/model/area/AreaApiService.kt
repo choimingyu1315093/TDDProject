@@ -11,7 +11,7 @@ interface AreaApiService {
         @Query("MobileApp")
         mobileApp: String,
         @Query("_type")
-        type: String,
+        type: String = "json",
         @Query("serviceKey")
         serviceKey: String,
     ): AreaDto

@@ -1,14 +1,15 @@
 package com.example.tddproject.model.area
 
-import com.example.tddproject.utils.NetworkUtil
 import kotlinx.coroutines.test.runTest
 import okhttp3.OkHttpClient
+import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import com.google.common.truth.Truth.assertThat
 
 class AreaRepositoryTest {
 
@@ -51,6 +52,29 @@ class AreaRepositoryTest {
               }
             }
         """.trimIndent()
+
+        server.enqueue(
+            MockResponse()
+                .setResponseCode(200)
+                .setHeader("Content-Type", "application/json")
+                .setBody(body)
+        )
+
+        // then: 매핑 검증
+        val list = repo.getAreaCode("AND", "APP", "SERVICE_KEY")
+        assertThat(list).containsExactly(
+            Area(1, "서울"),
+        ).inOrder()
+
+        // then: 전송된 요청의 쿼리 확인
+        val req = server.takeRequest()
+        val url = req.requestUrl!!
+        assertThat(req.method).isEqualTo("GET")
+        assertThat(url.encodedPath).isEqualTo("/B551011/KorService2/areaCode2")
+        assertThat(url.queryParameter("MobileOS")).isEqualTo("AND")
+        assertThat(url.queryParameter("MobileApp")).isEqualTo("APP")
+        assertThat(url.queryParameter("_type")).isEqualTo("json")
+        assertThat(url.queryParameter("serviceKey")).isEqualTo("SERVICE_KEY")
     }
 
     @After

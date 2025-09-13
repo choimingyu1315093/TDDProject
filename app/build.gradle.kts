@@ -40,6 +40,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 }
 
@@ -93,4 +94,9 @@ dependencies {
 
     // Truth(optional) - assertThat()
     testImplementation("com.google.truth:truth:1.4.4")
+
+
+    testImplementation("com.squareup.retrofit2:retrofit:2.11.0")
+    testImplementation("com.squareup.retrofit2:converter-gson:2.11.0")
+    testImplementation("com.squareup.okhttp3:okhttp:4.12.0")
 }
